@@ -49,6 +49,8 @@ export function RenewDialog({ memberId, trigger }: { memberId: string; trigger: 
       queryClient.invalidateQueries({ queryKey: ["payment-history", memberId] });
       queryClient.invalidateQueries({ queryKey: ["members"] });
       queryClient.invalidateQueries({ queryKey: ["expiring-soon"] });
+      queryClient.invalidateQueries({ queryKey: ["dues"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
       toast.success("Membership renewed");
       setOpen(false);
       setPackageId("");

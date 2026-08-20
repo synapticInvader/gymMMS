@@ -1,4 +1,4 @@
-import { addDays, subDays, subMonths } from "date-fns";
+import { addDays, set, subDays, subMonths } from "date-fns";
 import { today } from "@/lib/date";
 import { deriveStatus } from "@/lib/status";
 import type {
@@ -25,6 +25,14 @@ function iso(date: Date): string {
 
 function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
+}
+
+/** Spreads seeded check-ins across gym hours (6am-9pm) instead of all landing on
+ * midnight, using the sequence number so the spread is varied but deterministic. */
+function gymHourTime(date: Date, seedIndex: number): Date {
+  const hours = 6 + (seedIndex * 37) % 15;
+  const minutes = (seedIndex * 17) % 60;
+  return set(date, { hours, minutes, seconds: 0, milliseconds: 0 });
 }
 
 export const TENANT: Tenant = {
@@ -170,7 +178,7 @@ for (const member of todaysCheckIns) {
     id: id("att", attendanceSeq),
     member_id: member.id,
     branch_id: member.branch_id,
-    checked_in_at: iso(subDays(today(), 0)),
+    checked_in_at: iso(gymHourTime(subDays(today(), 0), attendanceSeq)),
   });
 }
 for (let daysAgo = 1; daysAgo <= 14; daysAgo += 1) {
@@ -181,7 +189,7 @@ for (let daysAgo = 1; daysAgo <= 14; daysAgo += 1) {
       id: id("att", attendanceSeq),
       member_id: member.id,
       branch_id: member.branch_id,
-      checked_in_at: iso(subDays(today(), daysAgo)),
+      checked_in_at: iso(gymHourTime(subDays(today(), daysAgo), attendanceSeq)),
     });
   }
 }

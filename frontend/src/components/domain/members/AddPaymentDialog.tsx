@@ -44,6 +44,8 @@ export function AddPaymentDialog({
       queryClient.invalidateQueries({ queryKey: ["payment-history", memberId] });
       queryClient.invalidateQueries({ queryKey: ["members"] });
       queryClient.invalidateQueries({ queryKey: ["dues"] });
+      queryClient.invalidateQueries({ queryKey: ["expiring-soon"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
       toast.success("Payment recorded");
       setOpen(false);
       setAmount("");
