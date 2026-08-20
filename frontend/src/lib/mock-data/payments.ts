@@ -3,9 +3,6 @@ import { MEMBER_PACKAGES, PACKAGES, PAYMENTS } from "@/lib/mock-data/seed";
 import { activePackageForMember, balanceForPackage } from "@/lib/mock-data/members";
 import type { MemberPackage, Package, Payment, PaymentMode } from "@/lib/mock-data/types";
 
-let packageCounter = MEMBER_PACKAGES.length;
-let paymentCounter = PAYMENTS.length;
-
 export interface PackageHistoryEntry {
   memberPackage: MemberPackage;
   package: Package | undefined;
@@ -34,9 +31,8 @@ export async function addPayment(
   input: { amount: number; mode: PaymentMode; date: string },
 ): Promise<Payment> {
   await delay();
-  paymentCounter += 1;
   const payment: Payment = {
-    id: `pay_${String(paymentCounter).padStart(3, "0")}`,
+    id: crypto.randomUUID(),
     member_package_id: memberPackageId,
     amount: input.amount,
     mode: input.mode,
@@ -66,9 +62,8 @@ export async function renewMember(memberId: string, input: RenewMemberInput): Pr
   const expiry = new Date(start);
   expiry.setDate(expiry.getDate() + pkg.duration_days);
 
-  packageCounter += 1;
   const memberPackage: MemberPackage = {
-    id: `mpkg_${String(packageCounter).padStart(3, "0")}`,
+    id: crypto.randomUUID(),
     member_id: memberId,
     package_id: pkg.id,
     total_amount: pkg.default_price,

@@ -3,8 +3,6 @@ import { BRANCHES, MEMBERS, MEMBER_PACKAGES, PACKAGES, PAYMENTS, TENANT } from "
 import { deriveStatus } from "@/lib/status";
 import type { Branch, Member, MemberPackage, MemberStatus, Package, PaymentMode } from "@/lib/mock-data/types";
 
-let memberCounter = MEMBERS.length;
-
 export function balanceForPackage(memberPackageId: string): number {
   const mp = MEMBER_PACKAGES.find((p) => p.id === memberPackageId);
   if (!mp) return 0;
@@ -97,8 +95,7 @@ export async function createMember(input: CreateMemberInput): Promise<MemberView
     throw new Error("A member with this mobile number already exists in this branch");
   }
 
-  memberCounter += 1;
-  const memberId = `member_${String(memberCounter).padStart(3, "0")}`;
+  const memberId = crypto.randomUUID();
   const now = new Date().toISOString();
 
   const member: Member = {
@@ -121,7 +118,7 @@ export async function createMember(input: CreateMemberInput): Promise<MemberView
     expiry.setDate(expiry.getDate() + pkg.duration_days);
 
     const memberPackage: MemberPackage = {
-      id: `mpkg_${String(memberCounter).padStart(3, "0")}`,
+      id: crypto.randomUUID(),
       member_id: memberId,
       package_id: pkg.id,
       total_amount: pkg.default_price,
@@ -133,7 +130,7 @@ export async function createMember(input: CreateMemberInput): Promise<MemberView
 
     if (input.initial_payment && input.initial_payment > 0) {
       PAYMENTS.push({
-        id: `pay_${String(memberCounter).padStart(3, "0")}`,
+        id: crypto.randomUUID(),
         member_package_id: memberPackage.id,
         amount: input.initial_payment,
         mode: input.payment_mode ?? "cash",
