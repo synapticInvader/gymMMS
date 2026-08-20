@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckInSearch } from "@/components/domain/attendance/CheckInSearch";
 import { AttendanceLogTable } from "@/components/domain/attendance/AttendanceLogTable";
@@ -48,9 +48,9 @@ export default function AttendancePage() {
             ))}
           </SelectContent>
         </Select>
-        <Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="w-40" />
+        <DatePicker value={from} onChange={setFrom} placeholder="From" className="w-40" />
         <span className="text-sm text-muted-foreground">to</span>
-        <Input type="date" value={to} onChange={(e) => setTo(e.target.value)} className="w-40" />
+        <DatePicker value={to} onChange={setTo} placeholder="To" className="w-40" />
       </div>
 
       <AttendanceLogTable rows={rows} isLoading={isLoading} />

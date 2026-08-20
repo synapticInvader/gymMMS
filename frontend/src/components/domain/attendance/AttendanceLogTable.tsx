@@ -36,7 +36,7 @@ export function AttendanceLogTable({ rows, isLoading }: { rows?: AttendanceRow[]
           <TableRow key={row.id}>
             <TableCell className="font-medium">{row.memberName}</TableCell>
             <TableCell>{row.branchName}</TableCell>
-            <TableCell>{formatDate(row.checked_in_at, "d MMM yyyy, h:mm a")}</TableCell>
+            <TableCell>{formatDate(row.checked_in_at, "dd/MM/yy, h:mm a")}</TableCell>
           </TableRow>
         ))}
       </TableBody>

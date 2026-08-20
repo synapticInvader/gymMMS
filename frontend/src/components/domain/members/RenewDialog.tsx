@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -86,7 +87,7 @@ export function RenewDialog({ memberId, trigger }: { memberId: string; trigger: 
           </Field>
           <Field>
             <FieldLabel htmlFor="renew-start">Start Date</FieldLabel>
-            <Input id="renew-start" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+            <DatePicker id="renew-start" value={startDate} onChange={setStartDate} />
           </Field>
           {expiryPreview && (
             <p className="text-sm text-muted-foreground">

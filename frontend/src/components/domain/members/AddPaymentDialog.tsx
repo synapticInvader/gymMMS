@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -90,7 +91,7 @@ export function AddPaymentDialog({
           </Field>
           <Field>
             <FieldLabel htmlFor="payment-date">Date</FieldLabel>
-            <Input id="payment-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+            <DatePicker id="payment-date" value={date} onChange={setDate} />
           </Field>
         </FieldGroup>
         <DialogFooter>
