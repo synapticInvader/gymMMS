@@ -1,12 +1,10 @@
-import { UserPlus } from "lucide-react";
-import { EmptyState } from "@/components/ui/empty-state";
+import { AddMemberForm } from "@/components/domain/members/AddMemberForm";
 
 export default function AddMemberPage() {
   return (
-    <EmptyState
-      icon={UserPlus}
-      title="Add Member"
-      description="The member form with a live expiry preview ships in the next PR."
-    />
+    <div className="space-y-6">
+      <h1 className="text-2xl font-semibold">Add Member</h1>
+      <AddMemberForm />
+    </div>
   );
 }
