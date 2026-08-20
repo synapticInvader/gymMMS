@@ -8,6 +8,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -136,7 +137,11 @@ export function AddMemberForm() {
 
             <Field data-invalid={!!errors.join_date}>
               <FieldLabel htmlFor="join_date">Joining Date</FieldLabel>
-              <Input id="join_date" type="date" {...register("join_date")} />
+              <Controller
+                control={control}
+                name="join_date"
+                render={({ field }) => <DatePicker id="join_date" value={field.value} onChange={field.onChange} />}
+              />
               {errors.join_date && <FieldError>{errors.join_date.message}</FieldError>}
             </Field>
 
