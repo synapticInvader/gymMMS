@@ -15,7 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Spinner } from "@/components/ui/spinner";
 import { computeExpiryDate, formatDate } from "@/lib/date";
 import { createMember } from "@/lib/mock-data/members";
-import { getBranches, getPackages } from "@/lib/mock-data/branding";
+import { getPackages } from "@/lib/mock-data/branding";
+import { getBranches } from "@/lib/api/branches";
 
 const addMemberSchema = z.object({
   name: z.string().trim().min(1, "Full name is required").max(120),

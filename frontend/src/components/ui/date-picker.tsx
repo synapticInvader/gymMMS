@@ -12,7 +12,7 @@ function toIsoDate(date: Date): string {
   return new Date(date.getTime() - offset * 60_000).toISOString().slice(0, 10);
 }
 
-/** Displays and edits dates as dd/mm/yy — native <input type="date"> follows the
+/** Displays and edits dates as dd/mm/yyyy — native <input type="date"> follows the
  * browser/OS locale and can't be forced into a fixed format, so this wraps the
  * shadcn Calendar instead. Value/onChange stay ISO (yyyy-mm-dd) strings so callers
  * don't need to change. */

@@ -44,7 +44,7 @@ export function isWithinPeriod(date: string | Date, period: Period, anchor: Date
   return isWithinInterval(target, { start, end });
 }
 
-export function formatDate(date: string | Date, pattern = "dd/MM/yy"): string {
+export function formatDate(date: string | Date, pattern = "dd/MM/yyyy"): string {
   const target = typeof date === "string" ? new Date(date) : date;
   return format(target, pattern);
 }

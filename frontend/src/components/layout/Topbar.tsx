@@ -18,7 +18,7 @@ export function Topbar() {
     <header className="flex h-14 shrink-0 items-center justify-between border-b bg-background px-4">
       <div className="flex items-center gap-2">
         <SidebarTrigger />
-        <span className="text-sm text-muted-foreground">{formatDate(today(), "EEEE, dd/MM/yy")}</span>
+        <span className="text-sm text-muted-foreground">{formatDate(today(), "EEEE, dd/MM/yyyy")}</span>
       </div>
       {isLoading ? (
         <Skeleton className="h-5 w-24" />

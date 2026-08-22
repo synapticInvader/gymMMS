@@ -1,5 +1,6 @@
+import { apiFetch } from "@/lib/api/client";
 import { delay } from "@/lib/mock-data/delay";
-import { BRANCHES, MEMBERS, MEMBER_PACKAGES, PACKAGES, PAYMENTS, TENANT } from "@/lib/mock-data/seed";
+import { BRANCHES, MEMBERS, MEMBER_PACKAGES, PACKAGES, PAYMENTS } from "@/lib/mock-data/seed";
 import { deriveStatus } from "@/lib/status";
 import type { Branch, Member, MemberPackage, MemberStatus, Package, PaymentMode } from "@/lib/mock-data/types";
 
@@ -85,32 +86,47 @@ export interface CreateMemberInput {
   payment_mode?: PaymentMode;
 }
 
+interface BackendMember {
+  id: string;
+  tenant_id: string;
+  branch_id: string;
+  name: string;
+  mobile: string;
+  gender: string | null;
+  join_date: string;
+  status: MemberStatus;
+  created_at: string;
+}
+
 export async function createMember(input: CreateMemberInput): Promise<MemberView> {
-  await delay();
+  const created = await apiFetch<BackendMember>("/members", {
+    method: "POST",
+    body: JSON.stringify({
+      branch_id: input.branch_id,
+      name: input.name,
+      mobile: input.mobile,
+      gender: input.gender,
+      join_date: input.join_date,
+    }),
+  });
 
-  const duplicate = MEMBERS.some(
-    (m) => m.branch_id === input.branch_id && m.mobile === input.mobile,
-  );
-  if (duplicate) {
-    throw new Error("A member with this mobile number already exists in this branch");
-  }
-
-  const memberId = crypto.randomUUID();
-  const now = new Date().toISOString();
+  const memberId = created.id;
+  const now = created.created_at;
 
   const member: Member = {
     id: memberId,
-    tenant_id: TENANT.id,
-    branch_id: input.branch_id,
-    name: input.name,
-    mobile: input.mobile,
-    gender: input.gender,
-    join_date: input.join_date,
-    status: "active",
+    tenant_id: created.tenant_id,
+    branch_id: created.branch_id,
+    name: created.name,
+    mobile: created.mobile,
+    gender: created.gender,
+    join_date: created.join_date,
+    status: created.status,
     created_at: now,
   };
   MEMBERS.push(member);
 
+  // Packages/payments have no backend endpoint yet, so this part stays mock-only.
   const pkg = PACKAGES.find((p) => p.id === input.package_id);
   if (pkg) {
     const start = new Date(input.join_date);
