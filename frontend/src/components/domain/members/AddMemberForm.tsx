@@ -54,7 +54,13 @@ export function AddMemberForm() {
     formState: { errors },
   } = useForm<AddMemberValues>({
     resolver: zodResolver(addMemberSchema),
-    defaultValues: { join_date: today, payment_mode: "cash", initial_payment: "" },
+    defaultValues: {
+      join_date: today,
+      payment_mode: "cash",
+      initial_payment: "",
+      branch_id: "",
+      package_id: "",
+    },
   });
 
   const [joinDate, packageId, initialPayment] = watch(["join_date", "package_id", "initial_payment"]);
