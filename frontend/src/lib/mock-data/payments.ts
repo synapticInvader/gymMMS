@@ -1,4 +1,5 @@
 import { delay } from "@/lib/mock-data/delay";
+import { randomId } from "@/lib/mock-data/id";
 import { MEMBER_PACKAGES, PACKAGES, PAYMENTS } from "@/lib/mock-data/seed";
 import { activePackageForMember, balanceForPackage } from "@/lib/mock-data/members";
 import type { MemberPackage, Package, Payment, PaymentMode } from "@/lib/mock-data/types";
@@ -32,7 +33,7 @@ export async function addPayment(
 ): Promise<Payment> {
   await delay();
   const payment: Payment = {
-    id: crypto.randomUUID(),
+    id: randomId(),
     member_package_id: memberPackageId,
     amount: input.amount,
     mode: input.mode,
@@ -63,7 +64,7 @@ export async function renewMember(memberId: string, input: RenewMemberInput): Pr
   expiry.setDate(expiry.getDate() + pkg.duration_days);
 
   const memberPackage: MemberPackage = {
-    id: crypto.randomUUID(),
+    id: randomId(),
     member_id: memberId,
     package_id: pkg.id,
     total_amount: pkg.default_price,

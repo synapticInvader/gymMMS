@@ -7,7 +7,11 @@ app = FastAPI(title="Gym MMS API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://frontend-lyart-beta-42.vercel.app"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://192.168.0.101:3000",
+        "https://frontend-lyart-beta-42.vercel.app",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

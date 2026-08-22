@@ -1,5 +1,6 @@
 import { apiFetch } from "@/lib/api/client";
 import { delay } from "@/lib/mock-data/delay";
+import { randomId } from "@/lib/mock-data/id";
 import { BRANCHES, MEMBERS, MEMBER_PACKAGES, PACKAGES, PAYMENTS } from "@/lib/mock-data/seed";
 import { deriveStatus } from "@/lib/status";
 import type { Branch, Member, MemberPackage, MemberStatus, Package, PaymentMode } from "@/lib/mock-data/types";
@@ -134,7 +135,7 @@ export async function createMember(input: CreateMemberInput): Promise<MemberView
     expiry.setDate(expiry.getDate() + pkg.duration_days);
 
     const memberPackage: MemberPackage = {
-      id: crypto.randomUUID(),
+      id: randomId(),
       member_id: memberId,
       package_id: pkg.id,
       total_amount: pkg.default_price,
@@ -146,7 +147,7 @@ export async function createMember(input: CreateMemberInput): Promise<MemberView
 
     if (input.initial_payment && input.initial_payment > 0) {
       PAYMENTS.push({
-        id: crypto.randomUUID(),
+        id: randomId(),
         member_package_id: memberPackage.id,
         amount: input.initial_payment,
         mode: input.payment_mode ?? "cash",
